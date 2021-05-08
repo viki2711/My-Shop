@@ -1,0 +1,65 @@
+// @route GET /files
+// @desc Display all files in JSON
+
+app.get("/files", function(req, res) {
+  gfs.files.find().toArray(function(err, files) {
+    if (!files || files.length === 0) {
+      return res.status(404).json({
+        err: "No files exist"
+      });
+    }
+    return res.json(files);
+  });
+});
+
+// @route GET /files/:filename
+// @desc Display single file in JSON
+
+app.get("/files/:filename", function(req, res) {
+  gfs.files.findOne({ filename: req.params.filename }, function (err, file) {
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: "No file exists"
+      });
+    }
+    // File exists
+    return res.json(file);
+  });
+});
+
+// @route GET /image/:filename
+// @desc Display single Image
+
+app.get("/image/:filename", function(req, res) {
+  gfs.files.findOne({ filename: req.params.filename }, function (err, file) {
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: "No file exists"
+      });
+    }
+    // Check if image
+    if(file.contentType === "image/jpeg" || file.contentType === "image/png") {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: "Not an image"
+      });
+    }
+  });
+});
+
+// @route DELETE /files/:id
+// @desc Delete dile
+
+app.delete("/files/:id", function(req, res) {
+  gridFSBucket.delete({_id: req.params.id, root: "uploads"}, function (err, GridFSBucket) {
+    if (err) {
+      return res.status(404).json({err: err});
+    } else {
+      console.log("Seccessfuly removed the item.");
+      res.redirect("/home");
+    }
+  });
+});

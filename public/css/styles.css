@@ -1,0 +1,90 @@
+body {
+  position: relative;
+  min-height: 100vh;
+  text-align: center;
+}
+.content-wrap {
+  padding-bottom: 2.5rem;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 2.5rem;
+  width: 100%;
+}
+h2, h3 {
+  margin-top: 3%;
+}
+
+/* home page */
+.container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.card {
+  width: 20rem;
+  height: 15rem;
+  margin-right: 12px;
+  margin-left: 12px;
+}
+.add-photos {
+  padding: 48px 0;
+}
+.cart {
+  color: #9720F5;
+}
+.btn-color {
+  color: #9720F5;
+}
+.account {
+  display: none;
+}
+
+/* about page */
+.app-goal {
+  margin-top: 3%;
+  font-size: 25px;
+}
+.features {
+  position: relative;
+}
+.feature-col {
+  padding: 4.5%;
+}
+.icon {
+
+  color: #9720F5;
+  margin-bottom: 1rem;
+}
+.icon:hover {
+  color: #ff4c88;
+}
+
+/* contact page */
+.contact-img {
+  width: 150px;
+  height: 150px;
+}
+.contact-row {
+  padding-top: 100px;
+}
+.contact-title {
+  font-size: 30px;
+}
+
+/* register page */
+.sign {
+  margin-top: 20px;
+}
+
+/* account page */
+.add-photos {
+  padding-top: 50px;
+}
+.account-text {
+  font-size: 25px;
+  padding-top: 50px;
+}
+.preview-images {
+  width: 30%;
+}

@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="row justify-content-md-center contact-row">
+    <div class="col-sm-3">
+      <form action="/register" method="POST">
+          <h1 class="h3 mb-3 fw-normal">Please Sign up</h1>
+
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput2" name="name" placeholder="Name">
+            <label for="floatingInput2">Name</label>
+          </div>
+
+          <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" name="username" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+          </div>
+
+          <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+          </div>
+
+          <button class="w-100 btn btn-lg btn-primary sign" type="submit">Sign up</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
