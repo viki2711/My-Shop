@@ -1,6 +1,6 @@
 # Image-Repository
 Art Shop app
-Platform for a photographers to share their photos for sale.
+A platform for photographers to sell their photos, and for photo lovers to buy unique authentic photos/prints.
 
 The basic version has:
 
