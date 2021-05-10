@@ -1,6 +1,8 @@
 body {
   position: relative;
   min-height: 100vh;
+}
+.center {
   text-align: center;
 }
 .content-wrap {
@@ -87,4 +89,10 @@ h2, h3 {
 }
 .preview-images {
   width: 30%;
+}
+
+/* edit page */
+.img-edit {
+  width: 800px;
+  height: auto;
 }

@@ -1,0 +1,42 @@
+<%- include("partials/header"); -%>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <img src="data:<%= image.contentType %>;base64,<%= image.imageBase64 %>" alt="image" class="img-edit">
+    </div>
+
+    <div class="col">
+      <h2 class="center mb-3">Edit Image</h2>
+      <form action="/save" method="post">
+        <div class="mb-3">
+          <label class="form-label" for="title">Photo Title</label>
+          <input class="form-control" type="text" id="title" name="imgTitle" value="<%= image.title %>">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="description">Photo Description</label>
+          <textarea class="form-control" type="text" id="description" name="imgDesc" value="<%= image.description %>" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="artist">Photographer</label>
+          <input class="form-control" type="text" id="artist" name="imgArtist" value="<%= image.photographer %>">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="price">Price</label>
+          <div class="input-group">
+            <input class="form-control" type="number" id="price" name="imgPrice" value="<%= image.price %>">
+            <span class="input-group-text">$</span>
+          </div>
+        </div>
+
+        <button class="btn btn-md btn-primary mx-auto d-block" type="submit" name="save" value="<%= image._id %>" onClick="this.form.submit()">Save</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<%- include("partials/footer"); -%>

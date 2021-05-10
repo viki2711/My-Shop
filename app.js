@@ -283,6 +283,39 @@ app.post("/delete", function(req, res) {
   res.redirect("/account");
 });
 
+app.post("/edit", function(req, res) {
+  const image_id = req.body.imgEdit;
+
+  Uploads.findById({_id: image_id}, function(err, foundImg){
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("image", {image: foundImg});
+    }
+  });
+});
+
+app.post("/save", function(req, res) {
+  const image_id = req.body.save;
+  const image_title = req.body.imgTitle;
+  const image_desc = req.body.imgDesc;
+  const image_artist = req.body.imgArtist;
+  const image_price = req.body.imgPrice;
+
+  Uploads.findById({_id: image_id}, function(err, foundImg){
+    if (err) {
+      console.log(err);
+    } else {
+      foundImg.title = image_title;
+      foundImg.description = image_desc;
+      foundImg.price = image_price;
+      foundImg.photographer = image_artist;
+      foundImg.save();
+    }
+  });
+  res.redirect("/account");
+});
+
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;

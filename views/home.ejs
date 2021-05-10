@@ -16,14 +16,17 @@
         <div class="card shadow mb-3" style="width: 20rem; height: auto;">
           <img src="data:<%= image.contentType %>;base64,<%= image.imageBase64 %>" class="card-img-top img-fluid" alt="image">
           <div class="card-body">
-            <h5 class="card-title">Photo title</h5>
-            <p class="card-text">Photo description</p>
+            <h5 class="card-title"><%= image.title %></h5>
+            <p class="card-text"><%= image.description %> ▪️ <%= image.photographer %> ▪️ <%= image.price %>$</p>
           </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="btn-group">
-              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-              <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
-            </div>
+
+          <div class="row">
+            <form class="col" action="/view" method="POST">
+              <button class=" btn btn-sm btn-outline-secondary border-0 float-start" type="submit" name="imgEdit" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-search-plus"></i></button>
+            </form>
+            <form class="col" action="/buy" method="POST">
+              <button class="btn btn-sm btn-outline-secondary border-0 float-end" type="submit" name="image" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-cart-plus"></i></button>
+            </form>
           </div>
         </div>
       </div>
