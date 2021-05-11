@@ -22,10 +22,10 @@
 
           <div class="row">
             <form class="col" action="/view" method="POST">
-              <button class=" btn btn-sm btn-outline-secondary border-0 float-start" type="submit" name="imgEdit" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-search-plus"></i></button>
+              <button class=" btn btn-sm btn-outline-secondary border-0 float-start" type="submit" name="imgView" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-search-plus"></i></button>
             </form>
             <form class="col" action="/buy" method="POST">
-              <button class="btn btn-sm btn-outline-secondary border-0 float-end" type="submit" name="image" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-cart-plus"></i></button>
+              <button class="btn btn-sm btn-outline-secondary border-0 float-end" type="submit" name="imgBuy" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-cart-plus"></i></button>
             </form>
           </div>
         </div>

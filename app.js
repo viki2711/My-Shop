@@ -290,7 +290,7 @@ app.post("/edit", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("image", {image: foundImg});
+      res.render("image", {image: foundImg, edit: "block", view: "none"});
     }
   });
 });
@@ -314,6 +314,18 @@ app.post("/save", function(req, res) {
     }
   });
   res.redirect("/account");
+});
+
+app.post("/view", function(req, res) {
+  const image_id = req.body.imgView;
+
+  Uploads.findById({_id: image_id}, function(err, foundImg){
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("image", {image: foundImg, edit: "none", view: "block"});
+    }
+  });
 });
 
 let port = process.env.PORT;

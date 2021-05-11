@@ -6,7 +6,7 @@
       <img src="data:<%= image.contentType %>;base64,<%= image.imageBase64 %>" alt="image" class="img-edit">
     </div>
 
-    <div class="col">
+    <div class="col" style="display: <%= edit %>;">
       <h2 class="center mb-3">Edit Image</h2>
       <form action="/save" method="post">
         <div class="mb-3">
@@ -34,6 +34,14 @@
 
         <button class="btn btn-md btn-primary mx-auto d-block" type="submit" name="save" value="<%= image._id %>" onClick="this.form.submit()">Save</button>
       </form>
+    </div>
+
+    <div class="col" style="display: <%= view %>;">
+      <h2 class="mb-3">Info</h2>
+      <p><b>Title:</b> <%= image.title %></p>
+      <p><b>Description:</b> <%= image.description %></p>
+      <p><b>Photographer:</b> <%= image.photographer %></p>
+      <p><b>Price:</b> <%= image.price %>$</p>
     </div>
 
   </div>

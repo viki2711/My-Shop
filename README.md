@@ -21,15 +21,19 @@ Delete photos -
 * The user can delete only his photos when he logged in.
 * The photo deleted from account page and the home page all together.
 
+# commit 6
 Edit photos info -
 * Update the title, description, artist name and price.
 * Updating possible just for logged in user from his account.
+
+# commit 7
+View large photo -
+* View photo - enlarge the photo and see the info
 
 Home page - all uploads from all the users
 Account page - the users see just their uploads and can delete them
 
 More features will be added in the next version:
-* View photo - enlarge the photo and see the info: price, photographer's name..
 * Sell photo
 * Buy photo
 
