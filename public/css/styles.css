@@ -32,11 +32,8 @@ h2, h3 {
 .add-photos {
   padding: 48px 0;
 }
-.cart {
-  color: #9720F5;
-}
 .btn-color {
-  color: #9720F5;
+  color: #c67ace;
 }
 .account {
   display: none;
@@ -45,7 +42,7 @@ h2, h3 {
 /* about page */
 .app-goal {
   margin-top: 3%;
-  font-size: 25px;
+  font-size: 20px;
 }
 .features {
   position: relative;
@@ -54,12 +51,8 @@ h2, h3 {
   padding: 4.5%;
 }
 .icon {
-
-  color: #9720F5;
+  color: #c67ace;
   margin-bottom: 1rem;
-}
-.icon:hover {
-  color: #ff4c88;
 }
 
 /* contact page */
@@ -94,5 +87,11 @@ h2, h3 {
 /* edit page */
 .img-edit {
   width: 800px;
+  height: auto;
+}
+
+/* cart page */
+.img-cart {
+  width: 50px;
   height: auto;
 }

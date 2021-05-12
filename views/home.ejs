@@ -1,15 +1,30 @@
 <%- include('partials/header') %>
 
-<section class="py-5 text-center container">
-  <div class="row py-lg-5">
+<section class="mt-3 text-center container">
+  <div class="row mb-3">
     <div class="col-lg-6 col-md-8 mx-auto">
-      <h1 class="fw-light">Art Shop</h1>
-      <p class="lead text-muted">Spread the creativity. Shop for original photos.</p>
+      <h1 class="feature-col fw-light">Art Shop</h1>
+      <p class="lead fw-bold text-muted app-goal">Do you love to take photos? Why don't you take it to the next step?</p>
+      <p class="lead text-muted app-goal">Art Shop is here to help you sell your masterpieces online easily!</p>
+      <p class="lead text-muted app-goal">Spread the creativity. Shop for original photos.</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <h3 class="center small-heading"><i class="icon fas fa-user-circle fa-2x"></i><br>Create an account</h3>
+    </div>
+    <div class="col">
+      <h3 class="center small-heading"><i class="icon fas fa-images fa-2x"></i><br>Upload your photos</h3>
+    </div>
+    <div class="col">
+      <h3 class="center small-heading"><i class="icon fas fa-hand-holding-usd fa-2x"></i><br>Set your price</h3>
     </div>
   </div>
 </section>
 
 <div class="container">
+  <hr>
   <div class="row row-cols-3 justify-content-md-center">
     <% images.forEach(function(image){ %>
       <div class="col-md-auto">

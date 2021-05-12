@@ -73,6 +73,12 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Schema model for the items in cart
+const cartSchema = new mongoose.Schema({
+  userID: mongoose.ObjectId,
+  productID: mongoose.ObjectId
+});
+const Cart = mongoose.model('Cart', cartSchema);
 
 // Create storage engine
 const storage = multer.diskStorage({
@@ -110,10 +116,6 @@ app.get("/home", function(req, res){
   });
 });
 
-app.get("/about", function(req, res) {
-  res.render("about");
-});
-
 app.get("/contact", function(req, res) {
   res.render("contact");
 });
@@ -143,7 +145,28 @@ app.get("/account", function(req, res) {
 
 app.get("/cart", function(req, res) {
   if(req.isAuthenticated()) {
-    res.render("cart");
+    Cart.find({userID: req.user.id}, function(err, foundItems){
+      if (err) {
+        console.log(err);
+      } else {
+        products = [];
+        foundItems.forEach(function(item) {
+          products.push(item.productID);
+        });
+        Uploads.find({_id: products}, function(err, foundImages){
+          if (err) {
+            console.log(err);
+          } else {
+            let total = 0;
+            count = foundImages.length;
+            foundImages.forEach(function(image) {
+              total += image.price;
+            });
+            res.render("cart", {items: foundImages, qty: count, total: total});
+          }
+        });
+      }
+    });
   } else {
     res.redirect("/login");
   }
@@ -283,6 +306,7 @@ app.post("/delete", function(req, res) {
   res.redirect("/account");
 });
 
+// Edit the selected image info.
 app.post("/edit", function(req, res) {
   const image_id = req.body.imgEdit;
 
@@ -295,6 +319,7 @@ app.post("/edit", function(req, res) {
   });
 });
 
+// Saving the info of an edited image to the db.
 app.post("/save", function(req, res) {
   const image_id = req.body.save;
   const image_title = req.body.imgTitle;
@@ -316,6 +341,7 @@ app.post("/save", function(req, res) {
   res.redirect("/account");
 });
 
+// Viewing the picture in a large format and its info
 app.post("/view", function(req, res) {
   const image_id = req.body.imgView;
 
@@ -328,11 +354,52 @@ app.post("/view", function(req, res) {
   });
 });
 
+// Adding the selected item/image to the shopping cart.
+app.post("/buy", function(req, res) {
+  if(req.isAuthenticated()) {
+    User.findById(req.user.id, function(err, foundUser){
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundUser) {
+          const userId = foundUser._id;
+
+          const imageId = req.body.imgBuy;
+
+          Uploads.findById({_id: imageId}, function(err, foundImg){
+            if (err) {
+              console.log(err);
+            } else {
+              // Creating a new item to save in the cart collection.
+              let newItem = new Cart({
+                userID: userId,
+                productID: foundImg._id
+              });
+              // Saving the item to the cart collection
+              newItem.save(function(err){
+                if(err) {
+                  console.log(err);
+                }
+                console.log("Successfully saved to the cart.");
+                res.redirect("/home");
+              });
+            }
+          });
+        }
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+
+// Setting a port to dynamic and static.
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
 
+// Listening to the port.
 app.listen(port, function(){
   console.log("Server is running successfully.");
 });
