@@ -104,20 +104,22 @@ const upload = multer({
 
 // @route GET /
 // @desc Loads form
-app.get("/home", function(req, res){
+app.get("/", function(req, res){
   Uploads.find({}, function(err, foundUploads) {
     if (err) {
       console.log(err);
     } else {
       if (foundUploads) {
-        res.render("home", {images: foundUploads});
+        res.render("home", {images: foundUploads, user: req.user});
+      } else {
+        res.render("home", {user: req.user});
       }
     }
   });
 });
 
 app.get("/contact", function(req, res) {
-  res.render("contact");
+  res.render("contact", {user: req.user});
 });
 
 // @desc Account page just for authenticated users
@@ -132,7 +134,7 @@ app.get("/account", function(req, res) {
           const photos = foundUser.photos;
           Uploads.find({"_id": photos}, function(err, foundPhotos){
             if (!err) {
-              res.render("account", {name: name, images: foundPhotos});
+              res.render("account", {name: name, images: foundPhotos, user: req.user});
             }
           });
         }
@@ -162,7 +164,7 @@ app.get("/cart", function(req, res) {
             foundImages.forEach(function(image) {
               total += image.price;
             });
-            res.render("cart", {items: foundImages, qty: count, total: total});
+            res.render("cart", {items: foundImages, qty: count, total: total, user: req.user});
           }
         });
       }
@@ -173,16 +175,16 @@ app.get("/cart", function(req, res) {
 });
 
 app.get("/login", function(req, res){
-  res.render("login");
+  res.render("login", {user: req.user});
 });
 
 app.get("/register", function(req, res){
-  res.render("register");
+  res.render("register", {user: req.user});
 });
 
 app.get("/logout", function(req, res) {
   req.logout();
-  res.redirect("/home");
+  res.redirect("/");
 });
 
 // @route POST
@@ -192,7 +194,7 @@ app.post("/register", function(req, res){
   User.register({name: req.body.name, username: req.body.username}, req.body.password, function(err,user) {
     if (err) {
       console.log(err);
-      res.redirect("/home");
+      res.redirect("/");
     } else {
       passport.authenticate('local') (req, res, function() {
         res.redirect("/account");
@@ -211,7 +213,7 @@ app.post("/login", function(req, res){
   req.login(user, function(err) {
     if (err) {
       console.log(err);
-      res.redirect("/home");
+      res.redirect("/");
     } else {
       passport.authenticate('local') (req, res, function() {
         res.redirect("/account");
@@ -381,7 +383,7 @@ app.post("/buy", function(req, res) {
                   console.log(err);
                 }
                 console.log("Successfully saved to the cart.");
-                res.redirect("/home");
+                res.redirect("/");
               });
             }
           });
