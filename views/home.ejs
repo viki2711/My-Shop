@@ -27,19 +27,19 @@
   <div class="row row-cols-3 justify-content-md-center">
     <% images.forEach(function(image){ %>
       <div class="col-md-auto">
-        <div class="card shadow mb-3" style="width: 20rem; height: auto;">
+        <div class="card shadow mb-3" style="width: 15rem; height: auto;">
           <img src="data:<%= image.contentType %>;base64,<%= image.imageBase64 %>" class="card-img-top img-fluid" alt="image">
           <div class="card-body">
             <h5 class="card-title"><%= image.title %></h5>
-            <p class="card-text"><%= image.description %> ▪️ <%= image.photographer %> ▪️ <%= image.price %>$</p>
+            <p class="card-text"><%= image.genre %> ▪️ <%= image.author %> ▪️ <%= image.price %>$</p>
           </div>
 
           <div class="row">
             <form class="col" action="/view" method="POST">
-              <button class=" btn btn-sm btn-outline-secondary border-0 float-start" type="submit" name="imgView" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-search-plus"></i></button>
+              <button class=" btn btn-sm btn-outline-secondary border-0 float-start" type="submit" name="itemView" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-search-plus"></i></button>
             </form>
             <form class="col" action="/buy" method="POST">
-              <button class="btn btn-sm btn-outline-secondary border-0 float-end" type="submit" name="imgBuy" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-cart-plus"></i></button>
+              <button class="btn btn-sm btn-outline-secondary border-0 float-end" type="submit" name="itemBuy" value="<%= image._id %>" onClick="this.form.submit()"><i class="fas fa-cart-plus"></i></button>
             </form>
           </div>
         </div>

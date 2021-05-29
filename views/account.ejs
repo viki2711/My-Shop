@@ -18,11 +18,11 @@
   <div class="row row-cols-3 justify-content-md-center">
     <% images.forEach(function(image){ %>
       <div class="col-md-auto">
-        <div class="card shadow mb-3" style="width: 20rem; height: auto;">
+        <div class="card shadow mb-3" style="width: 15rem; height: auto;">
           <img src="data:<%= image.contentType %>;base64,<%= image.imageBase64 %>" alt="image">
           <div class="card-body">
             <h5 class="card-title"><%= image.title %></h5>
-            <p class="card-text"><%= image.description %> ▪️ <%= image.photographer %> ▪️ <%= image.price %>$</p>
+            <p class="card-text"><%= image.genre %> ▪️ <%= image.author %> ▪️ <%= image.price %>$</p>
           </div>
           <div class="row">
             <form class="col" action="/edit" method="POST">

@@ -7,27 +7,27 @@
     </div>
 
     <div class="col" style="display: <%= edit %>;">
-      <h2 class="center mb-3">Edit Image</h2>
+      <h2 class="center mb-3">Edit Item</h2>
       <form action="/save" method="post">
         <div class="mb-3">
-          <label class="form-label" for="title">Photo Title</label>
-          <input class="form-control" type="text" id="title" name="imgTitle" value="<%= image.title %>">
+          <label class="form-label" for="title">Book Title</label>
+          <input class="form-control" type="text" id="title" name="title" value="<%= image.title %>">
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="description">Photo Description</label>
-          <textarea class="form-control" type="text" id="description" name="imgDesc" value="<%= image.description %>" rows="3"></textarea>
+          <label class="form-label" for="description">Book Genre</label>
+          <input class="form-control" type="text" id="description" name="genre" value="<%= image.genre %>">
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="artist">Photographer</label>
-          <input class="form-control" type="text" id="artist" name="imgArtist" value="<%= image.photographer %>">
+          <label class="form-label" for="artist">Author</label>
+          <input class="form-control" type="text" id="artist" name="author" value="<%= image.author %>">
         </div>
 
         <div class="mb-3">
           <label class="form-label" for="price">Price</label>
           <div class="input-group">
-            <input class="form-control" type="number" id="price" name="imgPrice" value="<%= image.price %>">
+            <input class="form-control" type="number" id="price" name="price" value="<%= image.price %>">
             <span class="input-group-text">$</span>
           </div>
         </div>
@@ -39,8 +39,8 @@
     <div class="col" style="display: <%= view %>;">
       <h2 class="mb-3">Info</h2>
       <p><b>Title:</b> <%= image.title %></p>
-      <p><b>Description:</b> <%= image.description %></p>
-      <p><b>Photographer:</b> <%= image.photographer %></p>
+      <p><b>Genre:</b> <%= image.genre %></p>
+      <p><b>Author:</b> <%= image.author %></p>
       <p><b>Price:</b> <%= image.price %>$</p>
     </div>
 

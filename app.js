@@ -49,10 +49,10 @@ const uploadSchema = new mongoose.Schema({
     required: true
   },
   title: String,
-  description: String,
+  genre: String,
+  author: String,
   price: Number,
-  amount: Number,
-  photographer: String
+  amount: Number
 });
 const Uploads = mongoose.model('Uploads', uploadSchema);
 
@@ -245,11 +245,11 @@ app.post("/upload", upload.array("myImages", 6), function(req, res) {
       filename: files[index].originalname,
       contentType: files[index].mimetype,
       imageBase64: src,
-      title: "Photo Title",
-      description: "Photo Description",
+      title: "Title",
+      genre: "Genre",
+      author: "Author",
       price: 0,
-      amount: 1,
-      photographer: "Photographer"
+      amount: 1
     }
 
     let newUpload = new Uploads(finalImg);
@@ -316,7 +316,7 @@ app.post("/edit", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("image", {image: foundImg, edit: "block", view: "none"});
+      res.render("image", {image: foundImg, edit: "block", view: "none", user: req.user});
     }
   });
 });
@@ -324,19 +324,19 @@ app.post("/edit", function(req, res) {
 // Saving the info of an edited image to the db.
 app.post("/save", function(req, res) {
   const image_id = req.body.save;
-  const image_title = req.body.imgTitle;
-  const image_desc = req.body.imgDesc;
-  const image_artist = req.body.imgArtist;
-  const image_price = req.body.imgPrice;
+  const image_title = req.body.title;
+  const image_desc = req.body.genre;
+  const image_artist = req.body.author;
+  const image_price = req.body.price;
 
   Uploads.findById({_id: image_id}, function(err, foundImg){
     if (err) {
       console.log(err);
     } else {
       foundImg.title = image_title;
-      foundImg.description = image_desc;
+      foundImg.genre = image_desc;
       foundImg.price = image_price;
-      foundImg.photographer = image_artist;
+      foundImg.author = image_artist;
       foundImg.save();
     }
   });
@@ -345,13 +345,13 @@ app.post("/save", function(req, res) {
 
 // Viewing the picture in a large format and its info
 app.post("/view", function(req, res) {
-  const image_id = req.body.imgView;
+  const image_id = req.body.itemView;
 
   Uploads.findById({_id: image_id}, function(err, foundImg){
     if (err) {
       console.log(err);
     } else {
-      res.render("image", {image: foundImg, edit: "none", view: "block"});
+      res.render("image", {image: foundImg, edit: "none", view: "block", user: req.user});
     }
   });
 });
@@ -366,7 +366,7 @@ app.post("/buy", function(req, res) {
         if (foundUser) {
           const userId = foundUser._id;
 
-          const imageId = req.body.imgBuy;
+          const imageId = req.body.itemBuy;
 
           Uploads.findById({_id: imageId}, function(err, foundImg){
             if (err) {
