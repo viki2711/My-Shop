@@ -30,7 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Mongo connection
-mongoose.connect('mongodb+srv://admin-vicky:Test654@cluster0.rmfg4.mongodb.net/imgDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://admin-vicky:Test654@cluster0.rmfg4.mongodb.net/MyShopDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 
 // Schema model for the photos uploads
