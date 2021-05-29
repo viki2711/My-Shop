@@ -10,6 +10,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require("multer");
 const fs = require("fs");
 const _ = require("lodash");
+const request = require('request');
 
 const app = express();
 
@@ -351,7 +352,15 @@ app.post("/view", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("image", {image: foundImg, edit: "none", view: "block", user: req.user});
+      request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=AIzaSyDdBg30Nn06L-Jrgvne9xyT4Ax-Wox6iKU', function(error, response, body) {
+        const library = JSON.parse(body);
+        const firstBook = library.items[0].volumeInfo;
+        const bookDesc = firstBook.description;
+        const rating = firstBook.averageRating;
+        const bookLink = firstBook.infoLink;
+        // console.log(firstBook);
+        res.render("image", {image: foundImg, edit: "none", view: "block", user: req.user, bookDesc: bookDesc, bookLink: bookLink, rating: rating});
+      });
     }
   });
 });
