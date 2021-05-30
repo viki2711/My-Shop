@@ -1,4 +1,4 @@
-// Documents/Programming/Image-Repository
+// Dwsktop/My-Shop
 const express = require("express");
 const path = require("path");
 const ejs = require("ejs");
@@ -9,7 +9,6 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require("multer");
 const fs = require("fs");
-const _ = require("lodash");
 const request = require('request');
 
 const app = express();
@@ -62,7 +61,8 @@ const userSchema = new mongoose.Schema ({
   name: String,
   username: String,
   password: String,
-  photos: [mongoose.ObjectId]
+  photos: [mongoose.ObjectId],
+  cartItems: Number
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -192,7 +192,7 @@ app.get("/logout", function(req, res) {
 // @desc register page, registered users redirected to the account
 app.post("/register", function(req, res){
 
-  User.register({name: req.body.name, username: req.body.username}, req.body.password, function(err,user) {
+  User.register({name: req.body.name, username: req.body.username, cartItems: 0}, req.body.password, function(err,user) {
     if (err) {
       console.log(err);
       res.redirect("/");
@@ -288,7 +288,7 @@ app.post("/delete", function(req, res) {
     });
   }
 
-  // Delete umage from account page (users collection)
+  // Delete item from account page (users collection)
   User.findById(req.user.id, function(err, foundUser){
     if (err) {
       console.log(err);
@@ -297,7 +297,7 @@ app.post("/delete", function(req, res) {
         var result = arrayRemove(foundUser.photos, image_id);
         foundUser.photos = result;
         foundUser.save();
-        // Delete umage from home page (uploads collection)
+        // Delete item from home page (uploads collection)
         Uploads.findByIdAndRemove({_id: image_id}, {useFindAndModify: false}, function(err){
           if (err) {
             console.log(err);
@@ -317,7 +317,15 @@ app.post("/edit", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("image", {image: foundImg, edit: "block", view: "none", user: req.user});
+      request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=AIzaSyDdBg30Nn06L-Jrgvne9xyT4Ax-Wox6iKU', function(error, response, body) {
+        const library = JSON.parse(body);
+        const firstBook = library.items[0].volumeInfo;
+        const bookDesc = firstBook.description;
+        const rating = firstBook.averageRating;
+        const bookLink = firstBook.infoLink;
+        // console.log(firstBook);
+        res.render("image", {image: foundImg, edit: "block", view: "none", user: req.user, bookDesc: bookDesc, bookLink: bookLink, rating: rating});
+      });
     }
   });
 });
@@ -374,8 +382,9 @@ app.post("/buy", function(req, res) {
       } else {
         if (foundUser) {
           const userId = foundUser._id;
-
           const imageId = req.body.itemBuy;
+          foundUser.cartItems += 1;
+          foundUser.save();
 
           Uploads.findById({_id: imageId}, function(err, foundImg){
             if (err) {
@@ -402,6 +411,31 @@ app.post("/buy", function(req, res) {
   } else {
     res.redirect("/login");
   }
+});
+
+// Delete item from the cart (cart collection)
+app.post("/cartdel", function(req, res) {
+  const item_id = req.body.cartItem;
+  // console.log(item_id);
+
+  Cart.deleteOne({productID: item_id}, {useFindAndModify: false}, function(err){
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("The item was successfully removed from the cart.");
+      User.findById(req.user.id, function(err, foundUser){
+        if (err) {
+          console.log(err);
+        } else {
+          if (foundUser) {
+            foundUser.cartItems -= 1;
+            foundUser.save();
+          }
+        }
+      });
+    }
+  });
+  res.redirect("/cart");
 });
 
 // Setting a port to dynamic and static.

@@ -32,12 +32,14 @@
               </ul>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/cart">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="badge rounded-pill badge-notification bg-danger">1</span>
-              </a>
-            </li>
+            <% if (user) { %>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/cart">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span class="badge rounded-pill badge-notification bg-danger"><%= user.cartItems %></span>
+                </a>
+              </li>
+            <% } %>
           </ul>
         </div>
 

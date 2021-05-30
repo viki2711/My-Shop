@@ -1,5 +1,5 @@
 # My-Shop
-My-Shop is a web app for stuff I want to sell.
+My-Shop is a Book shop web app for a second hand books.
 
 The app was built with Node.js
 * Express.js framework for Node.js
@@ -35,9 +35,10 @@ Edit item info -
 * Updating possible just for logged in user from his account.
 
 View large item photo -
-* View photo - enlarge the photo and see the info.
+* View item - enlarge the photo and see the info.
+* Info is fetching data from Google Books and has a link to a book.
 
-Cart - 
+Cart -
 * Add item photo to a shopping cart - through a cart button on the photo.
 * Cart page template for a checkout.
 * Photo automatically added to a Cart collection in DB.
@@ -46,4 +47,3 @@ Cart -
 More features will be added in the next version:
 * Sell photo
 * Buy photo
-* Price advise

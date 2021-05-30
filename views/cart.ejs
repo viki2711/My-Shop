@@ -11,11 +11,17 @@
       <ul class="list-group mb-3">
         <% items.forEach(function(item){ %>
           <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
+            <img src="data:<%= item.contentType %>;base64,<%= item.imageBase64 %>" alt="image" class="img-cart">
+            <div class="">
               <h6 class="my-0"><%= item.title %></h6>
-              <img src="data:<%= item.contentType %>;base64,<%= item.imageBase64 %>" alt="image" class="img-cart">
+              <p class="my-0 pt-4"><%= item.author %></p>
             </div>
-            <span class="text-muted"><%= item.price %>$</span>
+            <div class="">
+              <span class="text-muted"><%= item.price %>$</span>
+              <form class="col pt-3" action="/cartdel" method="POST">
+                <button class="btn btn-sm btn-outline-secondary border-0 float-end" type="submit" name="cartItem" value="<%= item._id %>" onClick="this.form.submit()"><i class="fas fa-trash-alt"></i></button>
+              </form>
+            </div>
           </li>
         <% }) %>
         <li class="list-group-item d-flex justify-content-between">
