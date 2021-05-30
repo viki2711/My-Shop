@@ -1,0 +1,28 @@
+<%- include("partials/header"); -%>
+
+<div class="container">
+
+  <div class="">
+    <h2 class="">Personal info</h2>
+    <div class="">
+      <p><b>Name:</b> <%= name %></p>
+      <p><b>User Name:</b> <%= username %></p>
+      <p><b>Uploads:</b> <%= uploads %></p>
+    </div>
+    <div class="">
+      <form class="" action="" method="POST">
+        <button class=" btn btn-sm btn-outline-secondary" type="submit" name="changePassword" value="<%= user._id %>" onClick="this.form.submit()">Change Password</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="">
+    <hr>
+  </div>
+
+  <div class="">
+    <h2>Transactions</h2>
+  </div>
+</div>
+
+<%- include("partials/footer"); -%>

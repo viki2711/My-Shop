@@ -9,7 +9,7 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require("multer");
 const fs = require("fs");
-const request = require('request');
+const request = require("request");
 
 const app = express();
 
@@ -123,7 +123,7 @@ app.get("/contact", function(req, res) {
   res.render("contact", {user: req.user});
 });
 
-// @desc Account page just for authenticated users
+// @desc Account uploads page just for authenticated users
 app.get("/account", function(req, res) {
   if(req.isAuthenticated()) {
     User.findById(req.user.id, function(err, foundUser){
@@ -138,6 +138,26 @@ app.get("/account", function(req, res) {
               res.render("account", {name: name, images: foundPhotos, user: req.user});
             }
           });
+        }
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+
+// @desc Account details page just for authenticated users
+app.get("/details", function(req, res) {
+  if(req.isAuthenticated()) {
+    User.findById(req.user.id, function(err, foundUser){
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundUser) {
+          const name = foundUser.name;
+          const username = foundUser.username;
+          const uploads = foundUser.photos.length;
+          res.render("details", {name: name, user: req.user, username: username, uploads: uploads});
         }
       }
     });
@@ -317,7 +337,7 @@ app.post("/edit", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=AIzaSyDdBg30Nn06L-Jrgvne9xyT4Ax-Wox6iKU', function(error, response, body) {
+      const req = request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=AIzaSyDdBg30Nn06L-Jrgvne9xyT4Ax-Wox6iKU', function(error, response, body) {
         const library = JSON.parse(body);
         const firstBook = library.items[0].volumeInfo;
         const bookDesc = firstBook.description;
@@ -326,6 +346,7 @@ app.post("/edit", function(req, res) {
         // console.log(firstBook);
         res.render("image", {image: foundImg, edit: "block", view: "none", user: req.user, bookDesc: bookDesc, bookLink: bookLink, rating: rating});
       });
+      req.end();
     }
   });
 });
@@ -360,15 +381,16 @@ app.post("/view", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=AIzaSyDdBg30Nn06L-Jrgvne9xyT4Ax-Wox6iKU', function(error, response, body) {
+      const req = request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=AIzaSyDdBg30Nn06L-Jrgvne9xyT4Ax-Wox6iKU', function(error, response, body) {
         const library = JSON.parse(body);
         const firstBook = library.items[0].volumeInfo;
         const bookDesc = firstBook.description;
         const rating = firstBook.averageRating;
         const bookLink = firstBook.infoLink;
         // console.log(firstBook);
-        res.render("image", {image: foundImg, edit: "none", view: "block", user: req.user, bookDesc: bookDesc, bookLink: bookLink, rating: rating});
+        res.render("image", {image: foundImg, edit: "none", view: "view", user: req.user, bookDesc: bookDesc, bookLink: bookLink, rating: rating});
       });
+      req.end();
     }
   });
 });

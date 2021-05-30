@@ -39,11 +39,24 @@ View large item photo -
 * Info is fetching data from Google Books and has a link to a book.
 
 Cart -
-* Add item photo to a shopping cart - through a cart button on the photo.
-* Cart page template for a checkout.
-* Photo automatically added to a Cart collection in DB.
+* Add item to a shopping cart - through a item cart button in home page.
+* Delete item from a cart - through a trash can icon in the cart page.
+* Item added/deleted from a Cart collection in DB.
 
+Transactions -
 
 More features will be added in the next version:
-* Sell photo
-* Buy photo
+* Send Email via contacts
+* Google Authentication
+* Save billing/shipping info for the next time.
+* Product Search
+* Working payment methods
+* Validations: Address, Payment
+* Order confirmation Email
+* Personal info details section in the account.
+* Forgot password
+* Change password
+* Shipping prices
+* Payment via PayPal
+
+* Add tests!
