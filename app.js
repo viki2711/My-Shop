@@ -342,7 +342,7 @@ app.post("/edit", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      const req = request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=AIzaSyDdBg30Nn06L-Jrgvne9xyT4Ax-Wox6iKU', function(error, response, body) {
+      const req = request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=', function(error, response, body) {
         const library = JSON.parse(body);
         const firstBook = library.items[0].volumeInfo;
         const bookDesc = firstBook.description;
@@ -386,7 +386,7 @@ app.post("/view", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      const req = request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=AIzaSyDdBg30Nn06L-Jrgvne9xyT4Ax-Wox6iKU', function(error, response, body) {
+      const req = request('https://www.googleapis.com/books/v1/volumes?q=' + foundImg.title +'&key=', function(error, response, body) {
         const library = JSON.parse(body);
         const firstBook = library.items[0].volumeInfo;
         const bookDesc = firstBook.description;
