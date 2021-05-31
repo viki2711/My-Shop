@@ -10,6 +10,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require("multer");
 const fs = require("fs");
 const request = require("request");
+const sendMail = require("./mail");
 
 const app = express();
 
@@ -201,6 +202,10 @@ app.get("/login", function(req, res){
 
 app.get("/register", function(req, res){
   res.render("register", {user: req.user});
+});
+
+app.get("/alert", function(req, res){
+  res.render("alert", {user: req.user});
 });
 
 app.get("/logout", function(req, res) {
@@ -458,6 +463,22 @@ app.post("/cartdel", function(req, res) {
     }
   });
   res.redirect("/cart");
+});
+
+// Send message from contacts
+app.post("/email", function(req, res) {
+  const email = req.body.email;
+  const subject = req.body.subject;
+  const text = req.body.message;
+  // console.log(email, subject, text);
+
+  sendMail(email, subject, text, function(err, data){
+    if (err) {
+      res.status(500).json({message: "Internal Error"});
+    } else {
+      res.redirect("/alert");
+    }
+  });
 });
 
 // Setting a port to dynamic and static.
